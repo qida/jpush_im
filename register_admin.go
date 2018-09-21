@@ -6,7 +6,7 @@ import (
 )
 
 // RegisterUsers 注册管理员
-func (c *Client) RegisterAdmin(reqAdmin []*RequestUsers) (err error) {
+func (c *Client) RegisterAdmin(reqAdmin *RequestUsers) (err error) {
 	adminBody, err := json.Marshal(reqAdmin)
 	if err != nil {
 		return
