@@ -12,7 +12,7 @@ func (c *Client) RegisterAdmin(reqAdmin []*RequestUsers) (err error) {
 		return
 	}
 	// 请求URL
-	url := "/v1/users/"
+	url := "/v1/admins/"
 	_, err = c.request("POST", url, bytes.NewReader(adminBody))
 	return
 }
