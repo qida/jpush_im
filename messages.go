@@ -87,6 +87,7 @@ type ImageText struct {
 func (c *Client) SendMsg(msg *MessagesSend) (reqMsg *RequestMsg, err error) {
 	body, err1 := json.Marshal(msg)
 	if err1 != nil {
+		fmt.Println("Error1")
 		err = err1
 		return
 	}
@@ -94,10 +95,11 @@ func (c *Client) SendMsg(msg *MessagesSend) (reqMsg *RequestMsg, err error) {
 	url := "/v1/messages"
 	resp, err2 := c.request("POST", url, bytes.NewReader(body))
 	if err2 == nil {
-		err = err2
-	} else {
 		reqMsg = new(RequestMsg)
 		err = json.Unmarshal(resp, reqMsg)
+	} else {
+		fmt.Println("Error2")
+		err = err2
 	}
 	return
 }
