@@ -1,8 +1,8 @@
 package jpush_im
 
 import (
-	"encoding/json"
 	"bytes"
+	"encoding/json"
 	"fmt"
 )
 
@@ -52,7 +52,7 @@ type MessagesSend struct {
 
 type RequestMsg struct {
 	MsgId    int64 `json:"msg_id"`
-	MsgCtime int64  `json:"msg_ctime"`
+	MsgCtime int64 `json:"msg_ctime"`
 }
 
 // MsgText  msg_type = text
@@ -85,16 +85,20 @@ type ImageText struct {
 
 // SendMsg 发送消息
 func (c *Client) SendMsg(msg *MessagesSend) (reqMsg *RequestMsg, err error) {
-	body, err := json.Marshal(msg)
-	if err != nil {
+	body, err1 := json.Marshal(msg)
+	if err1 != nil {
+		err = err1
 		return
 	}
 	// 请求URL
 	url := "/v1/messages"
-	resp, err := c.request("POST", url, bytes.NewReader(body))
-
-	reqMsg = new(RequestMsg)
-	err = json.Unmarshal(resp, reqMsg)
+	resp, err2 := c.request("POST", url, bytes.NewReader(body))
+	if err2 == nil {
+		err = err2
+	} else {
+		reqMsg = new(RequestMsg)
+		err = json.Unmarshal(resp, reqMsg)
+	}
 	return
 }
 
